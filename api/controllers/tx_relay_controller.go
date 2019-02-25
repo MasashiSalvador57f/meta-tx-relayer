@@ -60,6 +60,9 @@ func (t *TxRelayController) PostMetaTx(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(fmt.Sprintf("failed to decode json body %v", err)))
 	}
+
+	// TODO: currently commented out for debugging
+	// TODO: comment in
 	//
 	//err = er.Validate()
 	//if err != nil {

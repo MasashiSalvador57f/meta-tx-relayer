@@ -31,3 +31,7 @@ func (ac *AuthController) IssueRawMessage(w http.ResponseWriter, r *http.Request
 		return
 	}
 }
+
+func PostSignedMessage(w http.ResponseWriter, r *http.Request) {
+
+}
