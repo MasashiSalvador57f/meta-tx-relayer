@@ -3,12 +3,12 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/constants"
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/contracts"
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/controllers/requests"
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/infrastructure/ethereum/tx_option"
-	"github.com/davecgh/go-spew/spew"
-	"net/http"
 
 	"github.com/go-chi/chi"
 
@@ -56,7 +56,6 @@ func (t *TxRelayController) GetTxRelayNonce(w http.ResponseWriter, r *http.Reque
 func (t *TxRelayController) PostMetaTx(w http.ResponseWriter, r *http.Request) {
 	var er requests.ECRecoveryRequest
 	err := json.NewDecoder(r.Body).Decode(&er)
-	spew.Dump(er)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(fmt.Sprintf("failed to decode json body %v", err)))
