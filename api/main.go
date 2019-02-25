@@ -60,6 +60,13 @@ func main() {
 		r.Post("/", txRelayController.PostMetaTx)
 	})
 
+	authController := controllers.NewAuthController()
+
+	r.Route("/auth", func (r chi.Router) {
+		r.Get("/raw_message", authController.IssueRawMessage)
+		//r.Post("/signed_message", )
+	})
+
 	err = http.ListenAndServe(fmt.Sprintf(":%s", port), r)
 	if err != nil {
 		log.Fatalf("error starting gateway-api : %s", err.Error())
