@@ -15,19 +15,18 @@ import (
 // TODO cache estimated gas price (maybe?)
 
 const (
-	defaultTxValue = 0
+	defaultTxValue  = 0
 	defaultGasPrice = 20000000000
-	defaultGasLimit = 21000
+	defaultGasLimit = 51000
 )
 
-
 type ServerTxOptGenerator struct {
-	privateKey *ecdsa.PrivateKey
+	privateKey     *ecdsa.PrivateKey
 	publicKeyECDSA *ecdsa.PublicKey
-	addr common.Address
+	addr           common.Address
 	// TODO: this might be share variable (considering sync package)
-	nonce *big.Int
-	conn *ethclient.Client
+	nonce    *big.Int
+	conn     *ethclient.Client
 	gasPrice *big.Int
 	gasLimit uint64
 }
@@ -64,4 +63,3 @@ func (s *ServerTxOptGenerator) GenerateNewOption(ctx context.Context) *bind.Tran
 
 	return opt
 }
-

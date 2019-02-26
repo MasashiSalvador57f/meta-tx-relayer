@@ -68,11 +68,11 @@ func main() {
 		r.Post("/", txRelayController.PostMetaTx)
 	})
 
-	authController := controllers.NewAuthController()
+	authController := controllers.NewAuthController(txOptGenerator)
 	r.Route("/auth", func(r chi.Router) {
 		r.Use(authCtx(authContract))
 		r.Get("/raw_message", authController.IssueRawMessage)
-		//r.Post("/signed_message", )
+		r.Post("/token", authController.PostSignedMessage)
 	})
 
 	err = http.ListenAndServe(fmt.Sprintf(":%s", port), r)

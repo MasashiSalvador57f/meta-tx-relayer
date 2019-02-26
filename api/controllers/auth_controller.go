@@ -6,8 +6,11 @@ import (
 	"net/http"
 	"time"
 
+	txoption "github.com/MasashiSalvador57f/meta-tx-relayer/api/infrastructure/ethereum/tx_option"
+
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/constants"
 	contract "github.com/MasashiSalvador57f/meta-tx-relayer/api/contracts"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/go-chi/chi"
 
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/controllers/repsonses"
@@ -15,10 +18,14 @@ import (
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/services"
 )
 
-type AuthController struct{}
+type AuthController struct {
+	optGenerator *txoption.ServerTxOptGenerator
+}
 
-func NewAuthController() *AuthController {
-	return new(AuthController)
+func NewAuthController(optGenerator *txoption.ServerTxOptGenerator) *AuthController {
+	return &AuthController{
+		optGenerator,
+	}
 }
 
 func (ac *AuthController) IssueRawMessage(w http.ResponseWriter, r *http.Request) {
@@ -27,7 +34,7 @@ func (ac *AuthController) IssueRawMessage(w http.ResponseWriter, r *http.Request
 	msg := msgIssuer.IssueMsg(30*24*time.Hour, "seed")
 
 	signValidatorContract := r.Context().Value(constants.ContextKeyAuthContract).(*contract.SignValidator)
-	signValidationHandler := services.NewSignValidationHandler(signValidatorContract)
+	signValidationHandler := services.NewSignValidationHandler(signValidatorContract, nil)
 	nonce, err := signValidationHandler.GetNonce(addr)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -50,7 +57,7 @@ func (ac *AuthController) IssueRawMessage(w http.ResponseWriter, r *http.Request
 	}
 }
 
-func PostSignedMessage(w http.ResponseWriter, r *http.Request) {
+func (ac *AuthController) PostSignedMessage(w http.ResponseWriter, r *http.Request) {
 	var er requests.ECRecoveryRequest
 	err := json.NewDecoder(r.Body).Decode(&er)
 	if err != nil {
@@ -58,7 +65,35 @@ func PostSignedMessage(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(fmt.Sprintf("failed to decode json body %v", err)))
 	}
 
-	erp := er.ToECRecoveryProperty()
-	fmt.Println(erp)
+	// NOTE validation is skipped for a moment.
+	// TODO : comment in
+	//err = er.Validate()
+	//if err != nil {
+	//	w.WriteHeader(http.StatusBadRequest)
+	//	w.Write([]byte(fmt.Sprint(err.Error())))
+	//}
 
+	erp := er.ToECRecoveryProperty()
+
+	txOpt := ac.optGenerator.GenerateNewOption(r.Context())
+	signValidatorContract := r.Context().Value(constants.ContextKeyAuthContract).(*contract.SignValidator)
+	signValidationHandler := services.NewSignValidationHandler(signValidatorContract, txOpt)
+
+	tx, err := signValidationHandler.ValidateSignature(
+		erp.SigV,
+		erp.SigR,
+		erp.SigS,
+		erp.Data,
+		erp.OriginalSigner,
+	)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(fmt.Sprintf(err.Error())))
+
+		return
+	}
+
+	spew.Dump(tx)
+	w.WriteHeader(http.StatusCreated)
 }

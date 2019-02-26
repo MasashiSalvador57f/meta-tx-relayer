@@ -15,9 +15,10 @@ type SignValidationHandler struct {
 }
 
 // SignValidationHandler is ...
-func NewSignValidationHandler(c *contract.SignValidator) SignValidator {
+func NewSignValidationHandler(c *contract.SignValidator, txOpt *bind.TransactOpts) SignValidator {
 	return &SignValidationHandler{
 		signValidatorContract: c,
+		txOpt:                 txOpt,
 	}
 }
 
