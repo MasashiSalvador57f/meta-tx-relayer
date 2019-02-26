@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 
 contract SignValidator {
-    mapping(address => uint) public nonce public;
+    mapping(address => uint) public nonce;
 
     function validateSignature(
         uint8 sigV,
