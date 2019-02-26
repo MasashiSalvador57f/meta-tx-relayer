@@ -41,7 +41,7 @@ func (ac *AuthController) IssueRawMessage(w http.ResponseWriter, r *http.Request
 		AuthNonce:     nonce.Int64(),
 	}
 
-	err := json.NewEncoder(w).Encode(res)
+	err = json.NewEncoder(w).Encode(res)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(fmt.Sprint(err.Error())))
@@ -59,5 +59,6 @@ func PostSignedMessage(w http.ResponseWriter, r *http.Request) {
 	}
 
 	erp := er.ToECRecoveryProperty()
+	fmt.Println(erp)
 
 }
