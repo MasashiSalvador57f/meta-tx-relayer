@@ -6,11 +6,11 @@ import (
 )
 
 type ECRecoveryRequest struct {
-	SigV uint8 `json:"sig_v"`
-	SigR string `json:"sig_r"`
-	SigS string `json:"sig_s"`
-	DestAddress string `json:"dest_address"`
-	RawTx string `json:"raw_tx"`
+	SigV           uint8  `json:"sig_v"`
+	SigR           string `json:"sig_r"`
+	SigS           string `json:"sig_s"`
+	DestAddress    string `json:"dest_address"`
+	Data           string `json:"data"`
 	OriginalSigner string `json:"original_sender"`
 }
 
@@ -26,7 +26,7 @@ func (er *ECRecoveryRequest) Validate() error {
 	if len(er.DestAddress) < 0 {
 		return errors.New("dest_address should be non empty string")
 	}
-	if len(er.RawTx) < 0 {
+	if len(er.Data) < 0 {
 		return errors.New("raw_tx should be non empty")
 	}
 	if len(er.OriginalSigner) < 0 {
@@ -51,17 +51,17 @@ func (er *ECRecoveryRequest) ToECRecoveryProperty() *ECRecoveryProperty {
 	prop.SigS = sigS
 	prop.Destination = destination
 	// NOTE this cast is expensive coz it require memory copy TODO: fixit)
-	prop.Data = []byte(er.RawTx)
+	prop.Data = []byte(er.Data)
 	prop.OriginalSigner = signer
 
 	return prop
 }
 
 type ECRecoveryProperty struct {
-	SigV uint8
-	SigR [32]byte
-	SigS [32]byte
-	Destination common.Address
-	Data []byte
+	SigV           uint8
+	SigR           [32]byte
+	SigS           [32]byte
+	Destination    common.Address
+	Data           []byte
 	OriginalSigner common.Address
 }

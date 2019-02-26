@@ -28,7 +28,7 @@ var (
 )
 
 // SignValidatorABI is the input ABI used to generate the binding from.
-const SignValidatorABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"sigV\",\"type\":\"uint8\"},{\"name\":\"sigR\",\"type\":\"bytes32\"},{\"name\":\"sigS\",\"type\":\"bytes32\"},{\"name\":\"destination\",\"type\":\"address\"},{\"name\":\"data\",\"type\":\"bytes\"},{\"name\":\"originalSigner\",\"type\":\"address\"}],\"name\":\"validateSignature\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
+const SignValidatorABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"nonce\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"sigV\",\"type\":\"uint8\"},{\"name\":\"sigR\",\"type\":\"bytes32\"},{\"name\":\"sigS\",\"type\":\"bytes32\"},{\"name\":\"data\",\"type\":\"bytes\"},{\"name\":\"originalSigner\",\"type\":\"address\"}],\"name\":\"validateSignature\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"}]"
 
 // SignValidator is an auto generated Go binding around an Ethereum contract.
 type SignValidator struct {
@@ -198,23 +198,23 @@ func (_SignValidator *SignValidatorCallerSession) Nonce(arg0 common.Address) (*b
 	return _SignValidator.Contract.Nonce(&_SignValidator.CallOpts, arg0)
 }
 
-// ValidateSignature is a paid mutator transaction binding the contract method 0xf0813d8e.
+// ValidateSignature is a paid mutator transaction binding the contract method 0x3fa908c9.
 //
-// Solidity: function validateSignature(uint8 sigV, bytes32 sigR, bytes32 sigS, address destination, bytes data, address originalSigner) returns()
-func (_SignValidator *SignValidatorTransactor) ValidateSignature(opts *bind.TransactOpts, sigV uint8, sigR [32]byte, sigS [32]byte, destination common.Address, data []byte, originalSigner common.Address) (*types.Transaction, error) {
-	return _SignValidator.contract.Transact(opts, "validateSignature", sigV, sigR, sigS, destination, data, originalSigner)
+// Solidity: function validateSignature(uint8 sigV, bytes32 sigR, bytes32 sigS, bytes data, address originalSigner) returns()
+func (_SignValidator *SignValidatorTransactor) ValidateSignature(opts *bind.TransactOpts, sigV uint8, sigR [32]byte, sigS [32]byte, data []byte, originalSigner common.Address) (*types.Transaction, error) {
+	return _SignValidator.contract.Transact(opts, "validateSignature", sigV, sigR, sigS, data, originalSigner)
 }
 
-// ValidateSignature is a paid mutator transaction binding the contract method 0xf0813d8e.
+// ValidateSignature is a paid mutator transaction binding the contract method 0x3fa908c9.
 //
-// Solidity: function validateSignature(uint8 sigV, bytes32 sigR, bytes32 sigS, address destination, bytes data, address originalSigner) returns()
-func (_SignValidator *SignValidatorSession) ValidateSignature(sigV uint8, sigR [32]byte, sigS [32]byte, destination common.Address, data []byte, originalSigner common.Address) (*types.Transaction, error) {
-	return _SignValidator.Contract.ValidateSignature(&_SignValidator.TransactOpts, sigV, sigR, sigS, destination, data, originalSigner)
+// Solidity: function validateSignature(uint8 sigV, bytes32 sigR, bytes32 sigS, bytes data, address originalSigner) returns()
+func (_SignValidator *SignValidatorSession) ValidateSignature(sigV uint8, sigR [32]byte, sigS [32]byte, data []byte, originalSigner common.Address) (*types.Transaction, error) {
+	return _SignValidator.Contract.ValidateSignature(&_SignValidator.TransactOpts, sigV, sigR, sigS, data, originalSigner)
 }
 
-// ValidateSignature is a paid mutator transaction binding the contract method 0xf0813d8e.
+// ValidateSignature is a paid mutator transaction binding the contract method 0x3fa908c9.
 //
-// Solidity: function validateSignature(uint8 sigV, bytes32 sigR, bytes32 sigS, address destination, bytes data, address originalSigner) returns()
-func (_SignValidator *SignValidatorTransactorSession) ValidateSignature(sigV uint8, sigR [32]byte, sigS [32]byte, destination common.Address, data []byte, originalSigner common.Address) (*types.Transaction, error) {
-	return _SignValidator.Contract.ValidateSignature(&_SignValidator.TransactOpts, sigV, sigR, sigS, destination, data, originalSigner)
+// Solidity: function validateSignature(uint8 sigV, bytes32 sigR, bytes32 sigS, bytes data, address originalSigner) returns()
+func (_SignValidator *SignValidatorTransactorSession) ValidateSignature(sigV uint8, sigR [32]byte, sigS [32]byte, data []byte, originalSigner common.Address) (*types.Transaction, error) {
+	return _SignValidator.Contract.ValidateSignature(&_SignValidator.TransactOpts, sigV, sigR, sigS, data, originalSigner)
 }

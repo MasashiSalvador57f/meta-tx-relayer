@@ -1,20 +1,24 @@
 package services
 
 import (
-	"github.com/MasashiSalvador57f/meta-tx-relayer/api/contracts"
+	"math/big"
+
+	contract "github.com/MasashiSalvador57f/meta-tx-relayer/api/contracts"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
-	"math/big"
 )
 
 type SignValidationHandler struct {
 	signValidatorContract *contract.SignValidator
-	txOpt *types.Transaction
+	txOpt                 *bind.TransactOpts
 }
 
 // SignValidationHandler is ...
-func NewSignValidationHanlder() SignValidator {
-	return new(SignValidationHandler)
+func NewSignValidationHandler(c *contract.SignValidator) SignValidator {
+	return &SignValidationHandler{
+		signValidatorContract: c,
+	}
 }
 
 func (s *SignValidationHandler) GetNonce(addrStr string) (*big.Int, error) {

@@ -8,6 +8,6 @@ import (
 )
 
 type SignValidator interface {
-	GetNonce(addr string) *big.Int
+	GetNonce(addr string) (*big.Int, error)
 	ValidateSignature(sigV uint8, sigR [32]byte, sigS [32]byte, data []byte, originalSigner common.Address) (*types.Transaction, error)
 }
