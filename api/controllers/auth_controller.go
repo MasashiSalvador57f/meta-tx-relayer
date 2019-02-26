@@ -7,6 +7,7 @@ import (
 	"time"
 
 	txoption "github.com/MasashiSalvador57f/meta-tx-relayer/api/infrastructure/ethereum/tx_option"
+	"github.com/davecgh/go-spew/spew"
 
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/constants"
 	contract "github.com/MasashiSalvador57f/meta-tx-relayer/api/contracts"
@@ -93,5 +94,6 @@ func (ac *AuthController) PostSignedMessage(w http.ResponseWriter, r *http.Reque
 		return
 	}
 	w.WriteHeader(http.StatusCreated)
-	// TODO issue token.
+	// TODO issue token
+	spew.Dump(tx)
 }

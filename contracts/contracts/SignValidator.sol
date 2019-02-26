@@ -14,7 +14,14 @@ contract SignValidator {
         bytes32 h = keccak256(abi.encodePacked(byte(0x19), byte(0x45), address(this), originalSigner, nonce[originalSigner], data));
         address addressFromSig = ecrecover(h, sigV, sigR, sigS);
 
-        require(addressFromSig == originalSigner);
-        nonce[addressFromSig]++;
+        emit Log(addressFromSig);
+        emit Log(originalSigner);
+//        emit Hash(h);
+
+//        require(addressFromSig == originalSigner);
+//        nonce[addressFromSig]++;
     }
+
+    event Log(address);
+//    event Hash(bytes32);
 }

@@ -1,11 +1,14 @@
 package services
 
 import (
-	"github.com/satori/go.uuid"
+	"crypto/sha256"
+	"fmt"
 	"time"
+
+	uuid "github.com/satori/go.uuid"
 )
 
-type OneTimeMessageHandler struct {}
+type OneTimeMessageHandler struct{}
 
 func NewOneTimeMessageHandler() OneTimeMessageIssuer {
 	return new(OneTimeMessageHandler)
@@ -13,6 +16,6 @@ func NewOneTimeMessageHandler() OneTimeMessageIssuer {
 
 func (ot *OneTimeMessageHandler) IssueMsg(timeToExpiry time.Duration, seed string) string {
 	uuid := uuid.NewV4()
-	return uuid.String()
+	sum := sha256.Sum256([]byte(uuid.String()))
+	return fmt.Sprintf("%x", sum)
 }
-
