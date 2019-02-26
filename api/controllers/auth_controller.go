@@ -10,7 +10,6 @@ import (
 
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/constants"
 	contract "github.com/MasashiSalvador57f/meta-tx-relayer/api/contracts"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/go-chi/chi"
 
 	"github.com/MasashiSalvador57f/meta-tx-relayer/api/controllers/repsonses"
@@ -93,7 +92,6 @@ func (ac *AuthController) PostSignedMessage(w http.ResponseWriter, r *http.Reque
 
 		return
 	}
-
-	spew.Dump(tx)
 	w.WriteHeader(http.StatusCreated)
+	// TODO issue token.
 }
